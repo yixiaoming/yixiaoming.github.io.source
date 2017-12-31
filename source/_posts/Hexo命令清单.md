@@ -6,10 +6,9 @@ categories:
 tags:
   - Hexo
 typora-copy-images-to: ./Hexo命令清单
-
 ---
 
-# 常用命令
+## 常用命令
 
 创建文章, layout可使用 post(默认), draft(草稿), page ...
 
@@ -30,6 +29,8 @@ $ hexo generate
 $ hexo g
 ```
 
+<!-- more -->
+
 发布更新
 
 ```
@@ -40,7 +41,7 @@ $ hexo d
 生成并发布
 
 ```
-$ hexo g -d
+$ hexo d -g
 ```
 
 启动本地server查看, 默认： localhost:4000, 可自行指定参数
@@ -50,9 +51,15 @@ $ hexo server
 $ hexo s
 ```
 
+生成并预览
+
+```
+$ hexo s -g
+```
 
 
-# 官方地址：
+
+## 官方地址
 
 [https://hexo.io](https://hexo.io)
 

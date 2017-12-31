@@ -1,9 +1,10 @@
 ---
 title: {{ title }}
+date: {{ date }}
 tags:
-    - tag
+    - tags
 categories:
-    - categorie
+    - categories
 description: desc
 comments: false
 ---

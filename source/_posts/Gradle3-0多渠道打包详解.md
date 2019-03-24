@@ -2,9 +2,9 @@
 title: Gradle3.0多渠道打包详解
 tags:
   - Android
-  - 打包
+  - Gradle
 categories:
-  - Android
+  - Android打包
 comments: false
 date: 2017-12-31 11:41:28
 ---

@@ -3,8 +3,7 @@ title: Android事件分发机制详解
 tags:
   - Android
 categories:
-  - Android
-  - 事件分发
+  - Android事件分发
 description: 
 comments: false
 date: 2018-08-25 12:22:04

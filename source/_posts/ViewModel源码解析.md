@@ -1,5 +1,5 @@
 ---
-title: ViewModel源码解读
+title: ViewModel源码解析
 tags:
   - Android Component
 categories:
@@ -7,8 +7,8 @@ categories:
 comments: true
 date: 2019-03-24 09:31:41
 
-typora-root-url: ./ViewModel源码解读
-typora-copy-images-to: ./ViewModel源码解读
+typora-root-url: ./ViewModel源码解析
+typora-copy-images-to: ./ViewModel源码解析
 ---
 
 ## 介绍

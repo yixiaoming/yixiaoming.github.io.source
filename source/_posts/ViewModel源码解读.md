@@ -5,7 +5,6 @@ tags:
   - Android Component
 categories:
   - Android官方组件
-description: 解读Android官方组件ViewModel的实现原理
 comments: true
 date: 2019-03-24 09:31:41
 typora-copy-images-to: ./ViewModel源码解读
@@ -14,6 +13,8 @@ typora-copy-images-to: ./ViewModel源码解读
 ## 介绍
 
 本片文章主要解读Android官方推荐组件ViewModel的底层实现原理，ViewModel作为Activity/Fragment等组件的数据容器，可以避免我们在View层自己创建并保存数据，都交给ViewModel管理，在横竖屏切换等场景也能很好适配。让我们再不需要再onSaveInstanceState()来保存临时变量，并且ViewModel可能很好的适应组件的生命周期，在Activity等组件onDestroy()时自动清除数据避免内存泄漏。
+先来一张简图：
+![image-20190324122440712](./ViewModel源码解读/image-20190324122440712.png)
 
 <!-- more -->
 
@@ -61,7 +62,7 @@ public class MyActivity extends AppCompatActivity {
 首先需要注意：
 
 1. ViewModel这家伙不是我们直接new出来的，而是通过ViewModelProviders创建来的，所以其不受Activity等组件生命周期的限制。
-2. 如果对LiveData不了解，可以直接忽略，直接将它看成一个数据变量即可。
+2. 如果对LiveData不了解，可以直接忽略。
 
 ####  ViewModelProviders 的创建
 
@@ -177,7 +178,7 @@ FragmentActivity extends SupportActivity implements ViewModelStoreOwner,...{
       throw new IllegalStateException("Your activity is not yet attached to the Application instance. You can't request ViewModel before onCreate call.");
     } else {
       if (this.mViewModelStore == null) {
-          // 这里还跟configuration相关，真是考虑周到
+        // 这里很精髓，会将ViewModel绑定到不因为configuration变化导致Activity销毁被清空的NonConfigurationInstances下
         FragmentActivity.NonConfigurationInstances nc = (FragmentActivity.NonConfigurationInstances)this.getLastNonConfigurationInstance();
         if (nc != null) {
           this.mViewModelStore = nc.viewModelStore;
@@ -348,4 +349,13 @@ protected void onDestroy() {
 
 2. 获取ViewModelStore是通过ViewModelStoreOwner接口来的，每个组件自己去实现并创建自己的ViewModelStore，FragmentActivity，support.v4.app.Framgnet天然支持。如果传入的组件不支持，ViewModelStores 会创建一个隐藏的HolderFragment为你达到目的。
 3. 通过**ViewModelProvider.get(xxx.class)**会先到每个组件的ViewModelStore中去找，如果找不到通过AndroidViewModelFactory创建并放到ViewModelStore中。
-4. 当生命周期组件onDestroy的时候会清理ViewModelStore中的内容防止内存泄漏了，但是由于ConfigurationChange导致的onDestroy不会清理，这就是ViewModel做的适配。
+4. 当生命周期组件onDestroy的时候会清理ViewModelStore中的内容防止内存泄漏了，但是由于ConfigurationChange导致的onDestroy不会清理，因为会将ViewModel绑定到不因为configuration变化导致Activity销毁被清空的NonConfigurationInstances下，下一次重建依然会被获取到。
+
+### ViewModel的用法
+
+官网就给出了3大ViewModel的用途：
+
+1. 结合LiveData，为View组件提供数据，并保证不因为Configuration变化导致数据丢失。
+2. Fragment之间数据共享。`SharedViewModel model = ViewModelProviders.of(getActivity()).get(SharedViewModel.class);`同一个Activity下发不同Fragment可以通过传入Activity的context获取到相同的ViewModel对象。**Why？同一个Activity获取同一个ViewModelStore，相同的.class获取到的就是相同的ViewModel。**
+3. 替换Loaders，至于这玩意儿是啥，我没用过。看图大概的意思就是：Loader从DataSource获取数据，通知给LoaderManager，LoaderManager通知UI Controller更新。使用ViewModel+LiveData天然就可以干这个事情。
+

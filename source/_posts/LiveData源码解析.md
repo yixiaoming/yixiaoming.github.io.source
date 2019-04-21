@@ -1,10 +1,10 @@
 ---
 title: LiveData源码解析
 tags:
-  - Android Component
+  - Android
 categories:
   - Android源码解析系列
-comments: false
+comments: true
 date: 2019-03-24 19:13:34
 typora-copy-images-to: ./LiveData源码解析
 ---

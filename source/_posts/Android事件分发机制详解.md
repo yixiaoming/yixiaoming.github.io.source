@@ -5,7 +5,7 @@ tags:
 categories:
   - Android事件分发
 description: 
-comments: false
+comments: true
 date: 2018-08-25 12:22:04
 
 typora-root-url: ./Android事件分发机制详解

@@ -1,7 +1,7 @@
 ---
 title: ViewModel源码解析
 tags:
-  - Android Component
+  - Android
 categories:
   - Android源码解析系列
 comments: true

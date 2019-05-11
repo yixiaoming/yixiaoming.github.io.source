@@ -1,0 +1,12 @@
+header:
+
+  - titles:
+      en      : &EN       Archive
+      zh-Hans : &ZH_HANS  归档
+    url: /archive.html
+  - titles:
+      en      : &EN       About
+      zh-Hans : &ZH_HANS  关于
+    url: /about.html
+  - title     : GitHub
+    url       : https://github.com/yixiaoming
